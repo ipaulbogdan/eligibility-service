@@ -1,0 +1,9 @@
+services:
+  postgres:
+    image: 'postgres:17.4'
+    environment:
+      - 'POSTGRES_DB=eligibility'
+      - 'POSTGRES_PASSWORD=secretPass'
+      - 'POSTGRES_USER=user'
+    ports:
+      - 5432:5432

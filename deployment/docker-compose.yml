@@ -1,0 +1,17 @@
+services:
+  postgres:
+    image: 'postgres:17.4'
+    environment:
+      - 'POSTGRES_DB=eligibility'
+      - 'POSTGRES_PASSWORD=secretPass'
+      - 'POSTGRES_USER=user'
+  eligibility-service:
+    image: 'eligibility-service:0.0.1-SNAPSHOT'
+    environment:
+      - 'SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/eligibility'
+      - 'SPRING_DATASOURCE_USERNAME=user'
+      - 'SPRING_DATASOURCE_PASSWORD=secretPass'
+    depends_on:
+      - postgres
+    ports:
+      - 5050:8080
