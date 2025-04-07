@@ -39,6 +39,7 @@ dependencies {
 	implementation("io.jsonwebtoken:jjwt-impl:0.12.6")
 	implementation("io.jsonwebtoken:jjwt-jackson:0.12.6")
 	implementation("org.liquibase:liquibase-core")
+	implementation("com.bucket4j:bucket4j-core:8.10.1")
 
 	compileOnly("org.projectlombok:lombok")
 	developmentOnly("org.springframework.boot:spring-boot-docker-compose")

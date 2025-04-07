@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -46,6 +47,20 @@ public class ErrorHandler {
         }
 
         return ResponseEntity.status(BAD_REQUEST)
+                .body(apiError);
+    }
+
+    @ExceptionHandler(value = AuthenticationException.class)
+    public ResponseEntity<ApiResponse<ApiResponse.ErrorBody>> handle(AuthenticationException e) {
+        var errorBody = new ApiResponse.ErrorBody(ErrorCode.INVALID_CREDENTIALS,
+                ErrorCode.INVALID_CREDENTIALS.getMessage(),
+                null);
+
+        var apiError = new ApiResponse<>("error", errorBody);
+
+        auditLogsService.insert(null, "error", UNAUTHORIZED.value());
+
+        return ResponseEntity.status(UNAUTHORIZED)
                 .body(apiError);
     }
 
